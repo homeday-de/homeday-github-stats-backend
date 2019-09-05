@@ -1,4 +1,4 @@
-service: homeday-team-stats-backend
+service: homeday-github-stats-backend
 
 provider:
   name: aws
