@@ -1,7 +1,8 @@
-service: homeday-team-stats-backend
+service: homeday-github-stats-backend
 
 provider:
   name: aws
+  region: eu-central-1
   runtime: nodejs10.x
   environment:
     API_ENDPOINT: ${env:API_ENDPOINT}
