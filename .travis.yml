@@ -18,4 +18,4 @@ install:
 - npm ci
 
 script:
-- serverless deploy --stage $SERVERLESS_STAGE # Travis config
+- npm run deploy
