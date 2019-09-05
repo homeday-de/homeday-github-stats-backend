@@ -1,0 +1,43 @@
+service: homeday-team-stats-backend
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  githubAnalyze:
+    handler: index.githubAnalyze
+    events:
+      - http:
+          path: github/analyze
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                user: true
+                repo: true
+                dateFrom: true
+                dateTo: true
+    timeout: 30
+  githubRepositories:
+    handler: index.getGithubRepositories
+    events:
+      - http:
+          path: github/repositories
+          method: get
+          cors: true
+    timeout: 30

@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+- 11.12.0
+
+cache: npm
+
+branches:
+  only:
+  - master
+  - develop
+
+before_install:
+- source .travis.variables.sh
+- npm i -g npm@6.7.0
+
+install:
+- npm ci
+
+script:
+- serverless deploy --stage production

@@ -1,0 +1,22 @@
+{
+  "name": "homeday-team-stats-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "analyze": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^16.28.9",
+    "auth0": "^2.19.0",
+    "date-fns": "^2.0.1",
+    "dotenv": "^8.1.0",
+    "fluture": "^11.0.3",
+    "node-fetch": "^2.6.0",
+    "sanctuary": "^2.0.0",
+    "sanctuary-def": "^0.20.0"
+  }
+}
