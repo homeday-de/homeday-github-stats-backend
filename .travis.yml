@@ -18,4 +18,11 @@ install:
 - npm ci
 
 script:
-- npm run deploy
+- npm run test
+
+deploy:
+  provider: script
+  script: npm run deploy
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^develop|master$
