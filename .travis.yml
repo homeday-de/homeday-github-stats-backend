@@ -12,9 +12,18 @@ branches:
 before_install:
 - source .travis.variables.sh
 - npm i -g npm@6.7.0
+- npm i -g serverless
 
 install:
 - npm ci
 
 script:
-- serverless deploy --stage production
+- npm run test
+
+deploy:
+  provider: script
+  script: npm run deploy
+  skip_cleanup: true
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^develop|master$
