@@ -12,9 +12,10 @@ branches:
 before_install:
 - source .travis.variables.sh
 - npm i -g npm@6.7.0
+- npm i -g serverless
 
 install:
 - npm ci
 
 script:
-- serverless deploy --stage production
+- serverless deploy --stage $SERVERLESS_STAGE # Travis config
