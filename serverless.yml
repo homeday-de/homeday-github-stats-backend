@@ -3,6 +3,13 @@ service: homeday-team-stats-backend
 provider:
   name: aws
   runtime: nodejs10.x
+  environment:
+    API_ENDPOINT:'${env:API_ENDPOINT}'
+    AUTH0_BACKEND_CLIENT_ID:'${env:AUTH0_BACKEND_CLIENT_ID}'
+    AUTH0_BACKEND_CLIENT_SECRET:'${env:AUTH0_BACKEND_CLIENT_SECRET}'
+    AUTH0_BACKEND_DOMAIN:'${env:AUTH0_BACKEND_DOMAIN}'
+    AUTH0_CLIENT_ID:'${env:AUTH0_CLIENT_ID}'
+    AUTH0_DOMAIN:'${env:AUTH0_DOMAIN}'
 
 # you can define service wide environment variables here
 #  environment:
