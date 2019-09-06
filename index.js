@@ -75,7 +75,7 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
   })
     .then (results => s3.putObject ({
       Bucket: process.env.DEPLOYMENT_S3_BUCKET,
-      Key: `${uniqueFileName}.json`,
+      Key: `results/${uniqueFileName}.json`,
       Body: JSON.stringify (results),
       ContentType: 'application/json',
       ACL: 'public-read',
