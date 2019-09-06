@@ -73,10 +73,10 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
     dateTo: parseInt (dateTo, 10),
     authorizationToken: githubAuthorizationToken,
   })
-    .then (s3.putObject ({
+    .then (results => s3.putObject ({
       Bucket: process.env.BUCKET,
       Key: `${uniqueFileName}.json`,
-      Body: buffer,
+      Body: JSON.stringify (results),
       ContentType: 'application/json',
       ACL: 'public-read',
       CacheControl: 'no-cache',
