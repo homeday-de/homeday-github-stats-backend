@@ -18,7 +18,7 @@ provider:
     AUTH0_BACKEND_DOMAIN: ${env:AUTH0_BACKEND_DOMAIN}
     AUTH0_CLIENT_ID: ${env:AUTH0_CLIENT_ID}
     AUTH0_DOMAIN: ${env:AUTH0_DOMAIN}
-    DEPLOYMENT_S3_BUCKET: ${DEPLOYMENT_S3_BUCKET}
+    DEPLOYMENT_S3_BUCKET: ${env:DEPLOYMENT_S3_BUCKET}
 
 # you can define service wide environment variables here
 #  environment:
