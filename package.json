@@ -14,11 +14,13 @@
   "dependencies": {
     "@octokit/rest": "^16.28.9",
     "auth0": "^2.19.0",
+    "aws-sdk": "^2.524.0",
     "date-fns": "^2.0.1",
     "dotenv": "^8.1.0",
     "fluture": "^11.0.3",
     "node-fetch": "^2.6.0",
     "sanctuary": "^2.0.0",
-    "sanctuary-def": "^0.20.0"
+    "sanctuary-def": "^0.20.0",
+    "uuid": "^3.3.3"
   }
 }

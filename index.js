@@ -1,6 +1,8 @@
 'use strict';
 require ('dotenv').config ();
 
+const AWS = require ('aws-sdk');
+const uuidv4 = require ('uuid/v4');
 const {
   analyze: githubAnalyze,
   repositories: getGithubRepositories,
@@ -61,18 +63,31 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
     };
   }
 
-  const results = await githubAnalyze ({
+  const s3 = new AWS.S3 ();
+  const uniqueFileName = uuidv4 ();
+
+  githubAnalyze ({
     user,
     repo,
     dateFrom: parseInt (dateFrom, 10),
     dateTo: parseInt (dateTo, 10),
     authorizationToken: githubAuthorizationToken,
-  });
+  })
+    .then (s3.putObject ({
+      Bucket: process.env.BUCKET,
+      Key: `${uniqueFileName}.json`,
+      Body: buffer,
+      ContentType: 'application/json',
+      ACL: 'public-read',
+      CacheControl: 'no-cache',
+    }).promise ());
 
   return {
     statusCode: 200,
     headers: CORS_HEADERS,
-    body: JSON.stringify (results),
+    body: JSON.stringify ({
+      path: `${process.env.APP_DOMAIN}/results/${uniqueFileName}.json`
+    }),
   };
 };
 

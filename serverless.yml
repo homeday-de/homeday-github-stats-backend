@@ -4,8 +4,15 @@ provider:
   name: aws
   region: eu-central-1
   runtime: nodejs10.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::${env:DEPLOYMENT_S3_BUCKET}/results/*"
   environment:
     API_ENDPOINT: ${env:API_ENDPOINT}
+    APP_DOMAIN: ${env:APP_DOMAIN}
     AUTH0_BACKEND_CLIENT_ID: ${env:AUTH0_BACKEND_CLIENT_ID}
     AUTH0_BACKEND_CLIENT_SECRET: ${env:AUTH0_BACKEND_CLIENT_SECRET}
     AUTH0_BACKEND_DOMAIN: ${env:AUTH0_BACKEND_DOMAIN}
@@ -40,7 +47,7 @@ functions:
                 repo: true
                 dateFrom: true
                 dateTo: true
-    timeout: 30
+    timeout: 90
   githubRepositories:
     handler: index.getGithubRepositories
     events:
