@@ -40,7 +40,7 @@ functions:
                 repo: true
                 dateFrom: true
                 dateTo: true
-    timeout: 30
+    timeout: 90
   githubRepositories:
     handler: index.getGithubRepositories
     events:
