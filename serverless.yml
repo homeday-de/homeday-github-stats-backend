@@ -1,5 +1,8 @@
 service: homeday-github-stats-backend
 
+plugins:
+  - serverless-prune-plugin
+
 provider:
   name: aws
   region: eu-central-1
@@ -10,6 +13,10 @@ provider:
         - s3:PutObject
         - s3:PutObjectAcl
       Resource: "arn:aws:s3:::${env:DEPLOYMENT_S3_BUCKET}/results/*"
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
   environment:
     API_ENDPOINT: ${env:API_ENDPOINT}
     APP_DOMAIN: ${env:APP_DOMAIN}
@@ -19,6 +26,7 @@ provider:
     AUTH0_CLIENT_ID: ${env:AUTH0_CLIENT_ID}
     AUTH0_DOMAIN: ${env:AUTH0_DOMAIN}
     DEPLOYMENT_S3_BUCKET: ${env:DEPLOYMENT_S3_BUCKET}
+    SERVERLESS_STAGE: ${env:SERVERLESS_STAGE}
 
 # you can define service wide environment variables here
 #  environment:
@@ -48,6 +56,9 @@ functions:
                 repo: true
                 dateFrom: true
                 dateTo: true
+    timeout: 30
+  githubAnalyzeWorker:
+    handler: index.githubAnalyzeWorker
     timeout: 90
   githubRepositories:
     handler: index.getGithubRepositories
@@ -57,3 +68,8 @@ functions:
           method: get
           cors: true
     timeout: 30
+
+custom:
+  prune:
+    automatic: true
+    number: 2

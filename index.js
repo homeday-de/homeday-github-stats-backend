@@ -63,10 +63,45 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
     };
   }
 
-  const s3 = new AWS.S3 ();
+  const lambda = new AWS.Lambda ({
+    region: 'eu-central-1',
+  });
   const uniqueFileName = uuidv4 ();
 
-  githubAnalyze ({
+  return new Promise((resolve) => {
+    lambda.invoke ({
+      FunctionName: `homeday-github-stats-backend-${SERVERLESS_STAGE}-githubAnalyzeWorker`,
+      Payload: JSON.stringify ({
+        githubAuthorizationToken,
+        uniqueFileName,
+        repo,
+        user,
+        dateFrom,
+        dateTo,
+      }),
+      InvocationType: 'Event',
+    }, function () {
+      resolve({
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify ({
+          path: `${process.env.APP_DOMAIN}/results/${uniqueFileName}.json`,
+        }),
+      });
+    });
+  });
+};
+
+module.exports.githubAnalyzeWorker = async ({
+  githubAuthorizationToken,
+  uniqueFileName,
+  repo,
+  user,
+  dateFrom,
+  dateTo,
+}) => {
+  const s3 = new AWS.S3 ();
+  const success = await githubAnalyze ({
     user,
     repo,
     dateFrom: parseInt (dateFrom, 10),
@@ -86,7 +121,8 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
     statusCode: 200,
     headers: CORS_HEADERS,
     body: JSON.stringify ({
-      path: `${process.env.APP_DOMAIN}/results/${uniqueFileName}.json`
+      path: `${process.env.APP_DOMAIN}/results/${uniqueFileName}.json`,
+      success: JSON.stringify (success),
     }),
   };
 };
