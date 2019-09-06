@@ -70,7 +70,7 @@ module.exports.githubAnalyze = async ({ queryStringParameters, headers: { Author
 
   return new Promise((resolve) => {
     lambda.invoke ({
-      FunctionName: `homeday-github-stats-backend-${SERVERLESS_STAGE}-githubAnalyzeWorker`,
+      FunctionName: `homeday-github-stats-backend-${process.env.SERVERLESS_STAGE}-githubAnalyzeWorker`,
       Payload: JSON.stringify ({
         githubAuthorizationToken,
         uniqueFileName,
